@@ -36,9 +36,8 @@ app.post('/todo/update/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = todo.findIndex(f => f.id == id);
     if (index < 0) {
-        res.status(200).json({ result: false, message: 'id not found' });
+        return res.status(200).json({ result: false, message: 'id not found' });
     }
-
     todo[index].text = text;
     res.json({
         result: true,
@@ -50,7 +49,7 @@ app.post('/todo/update/:id', (req, res) => {
 app.post('/todo/deleted/:id', (req, res) => {
     const id = parseInt(req.params.id);
     if (todo.filter(f => f.id == id).length == 0) {
-        res.json({
+        return res.json({
             result: false,
             message: 'id not found',
             data: todo
