@@ -6,24 +6,24 @@ const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-let todos = [];
+let todo = [];
 
-app.get('/todos', (req, res) => {
+app.get('/todo', (req, res) => {
     res.json({
         result: true,
         message: '',
-        data: todos
+        data: todo
     });
 });
 
-app.post('/todos', (req, res) => {
+app.post('/todo', (req, res) => {
     const { text } = req.body;
-    const id = todos[todos.length - 1]?.id ?? 0;
+    const id = todo[todo.length - 1]?.id ?? 0;
     const newTodo = {
         id: id + 1,
         text,
     };
-    todos.push(newTodo);
+    todo.push(newTodo);
     res.json({
         result: true,
         message: '',
@@ -31,36 +31,36 @@ app.post('/todos', (req, res) => {
     });
 });
 
-app.post('/todos/update/:id', (req, res) => {
+app.post('/todo/update/:id', (req, res) => {
     const { text } = req.body;
     const id = parseInt(req.params.id);
-    const index = todos.findIndex(f => f.id == id);
+    const index = todo.findIndex(f => f.id == id);
     if (index < 0) {
         res.status(200).json({ result: false, message: 'id not found' });
     }
 
-    todos[index].text = text;
+    todo[index].text = text;
     res.json({
         result: true,
         message: '',
-        data: todos[index]
+        data: todo[index]
     });
 });
 
-app.post('/todos/deleted/:id', (req, res) => {
+app.post('/todo/deleted/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    if (todos.filter(f => f.id == id).length == 0) {
+    if (todo.filter(f => f.id == id).length == 0) {
         res.json({
             result: false,
             message: 'id not found',
-            data: todos
+            data: todo
         });
     }
-    todos = todos.filter(todo => todo.id !== id);
+    todo = todo.filter(todo => todo.id !== id);
     res.json({
         result: true,
         message: 'deleted successfully',
-        data: todos
+        data: todo
     });
 });
 
