@@ -35,7 +35,6 @@ app.post('/todos/update/:id', (req, res) => {
     const { text } = req.body;
     const id = parseInt(req.params.id);
     const index = todos.findIndex(f => f.id == id);
-    console.log(index)
     if (index < 0) {
         res.status(200).json({ result: false, message: 'id not found' });
     }
